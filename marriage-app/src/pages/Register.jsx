@@ -18,6 +18,8 @@ const initialState = {
   religion: "",
   gender: "",
   age: "",
+  accept: "",
+  deny: "",
 };
 
 const Register = () => {

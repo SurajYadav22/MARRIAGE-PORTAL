@@ -1,12 +1,21 @@
-import { Flex } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import React, { useContext } from "react";
 
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContextProvider";
+import { useState } from "react";
 
 const Header = () => {
   const { toggleAuth, isAdmin, isUser, toggleUser } = useContext(AuthContext);
-
+  const [language, setLanguage] = useState("English");
   const handleclick = () => {
     if (isAdmin) {
       toggleAuth();
@@ -16,14 +25,15 @@ const Header = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     let user_name = sessionStorage.getItem("user") || "";
-  //     setUser(user_name);
-  //   }, []);
-
   return (
     <>
-      <Flex bg="#b19d9e" flexDirection="row-reverse" gap="20px" p="10px">
+      <Flex
+        bg="#b19d9e"
+        flexDirection="row-reverse"
+        gap="20px"
+        p="10px"
+        alignItems="center"
+      >
         {isAdmin || isUser ? (
           <Link to="/" onClick={handleclick}>
             Logout
@@ -36,6 +46,15 @@ const Header = () => {
         </Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/register">Registration</Link>
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg="none">
+            {language}
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => setLanguage("English")}>English</MenuItem>
+            <MenuItem onClick={() => setLanguage("Hindi")}>Hindi</MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
     </>
   );

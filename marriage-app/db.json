@@ -13,7 +13,9 @@
       "gender": "Male",
       "age": "20",
       "profession": "Business",
-      "id": 2
+      "id": 2,
+      "accept": "",
+      "deny": ""
     },
     {
       "userPhoto": {
@@ -28,7 +30,9 @@
       "gender": "Male",
       "age": "21",
       "profession": "Service",
-      "id": 3
+      "id": 3,
+      "accept": "Your profile accepted",
+      "deny": ""
     },
     {
       "userPhoto": {
@@ -43,7 +47,9 @@
       "gender": "Male",
       "age": "22",
       "profession": "Self Employed",
-      "id": 4
+      "id": 4,
+      "accept": "",
+      "deny": ""
     },
     {
       "userPhoto": {
@@ -56,7 +62,9 @@
       "gender": "Male",
       "age": "32",
       "profession": "Business",
-      "id": 5
+      "id": 5,
+      "accept": "",
+      "deny": "Your documents are invalid!"
     },
     {
       "userPhoto": {
@@ -71,7 +79,9 @@
       "gender": "Male",
       "age": "23",
       "profession": "Service",
-      "id": 6
+      "id": 6,
+      "accept": "",
+      "deny": ""
     }
   ],
   "users": [
@@ -80,6 +90,12 @@
       "name": "Abhijeet",
       "email": "abhi@gmail.com",
       "password": "Abhi@123"
+    },
+    {
+      "name": "Raj",
+      "email": "raj@gmail.com",
+      "password": "1234567",
+      "id": 2
     }
   ]
 }

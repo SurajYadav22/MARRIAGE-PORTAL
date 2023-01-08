@@ -13,7 +13,7 @@ import { AuthContext } from "../context/AuthContextProvider";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
-  const { isAdmin } = useContext(AuthContext);
+  const { isUser, isAdmin } = useContext(AuthContext);
 
   const getData = () => {
     fetch(url)
@@ -26,6 +26,35 @@ const Dashboard = () => {
     getData();
     // console.log(data);
   }, []);
+
+  const handleApprove = (elem) => {
+    let updatedData = { ...elem, accept: "Your profile accepted" };
+    // setIsAccept(updatedData);
+    console.log(updatedData, "HEY ");
+    fetch(`${url}/${elem.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(updatedData),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(() => {
+        alert("Profile approved!");
+      })
+      .catch(() => alert("Failed updation"));
+  };
+
+  const handleReject = (elem) => {
+    let updatedData = { ...elem, deny: "Your documents are invalid!" };
+    console.log(updatedData);
+    fetch(`${url}/${elem.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(updatedData),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(() => {
+        alert("Profile rejected!");
+      })
+      .catch(() => alert("Failed"));
+  };
 
   return (
     <Box>
@@ -62,12 +91,41 @@ const Dashboard = () => {
                     <Text as="b">Profession : {elem.profession}</Text>
                     <Text as="b">Age : {elem.age}</Text>
                     <Text as="b">Gender : {elem.gender}</Text>
+                    {isUser ? (
+                      elem.accept !== "" ? (
+                        <Text color="teal">{elem.accept}</Text>
+                      ) : (
+                        ""
+                      )
+                    ) : (
+                      ""
+                    )}
+
+                    {isUser ? (
+                      elem.deny !== "" ? (
+                        <Text color="red">{elem.deny}</Text>
+                      ) : (
+                        ""
+                      )
+                    ) : (
+                      ""
+                    )}
                   </VStack>
 
                   {isAdmin ? (
                     <Flex justifyContent="space-around" m="5px">
-                      <Button colorScheme="teal">Approve</Button>
-                      <Button colorScheme="red">Deny</Button>
+                      <Button
+                        colorScheme="teal"
+                        onClick={() => handleApprove(elem)}
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        colorScheme="red"
+                        onClick={() => handleReject(elem)}
+                      >
+                        Deny
+                      </Button>
                     </Flex>
                   ) : (
                     ""
