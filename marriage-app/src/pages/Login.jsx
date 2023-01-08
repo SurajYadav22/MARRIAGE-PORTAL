@@ -6,9 +6,10 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { url } from "../config/api";
+import { url2 } from "../config/api";
+import { AuthContext } from "../context/AuthContextProvider";
 
 const initialState = {
   email: "",
@@ -17,6 +18,7 @@ const initialState = {
 
 const Login = () => {
   const [user, setUser] = useState(initialState);
+  const { toggleAuth, toggleUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -30,19 +32,28 @@ const Login = () => {
     if (email !== "" && password !== "") {
       if (email === "admin@gmail.com" && password === "Admin@123") {
         alert("Welcome to admin pannel!");
+        toggleAuth();
         return navigate("/dashboard");
       } else {
-        fetch(url)
+        fetch(url2)
           .then((res) => res.json())
           .then((res) => {
-            console.log(res, " check res in 41");
+            // console.log(res);
+            // console.log(res, " check res in 41");
+            let user_name = "";
             let isAvailable = res.filter((el) => {
+              user_name = el.name;
               return el.email === user.email && el.password === user.password;
             });
-            if (isAvailable) {
+
+            if (isAvailable.length !== 0) {
               alert("Login successful");
+              sessionStorage.setItem("user", JSON.stringify(user_name));
+              toggleUser();
 
               return navigate("/register");
+            } else {
+              alert("User does not exist!");
             }
           })
           .catch(() => alert("Login failed"));

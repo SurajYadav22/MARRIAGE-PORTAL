@@ -7,8 +7,8 @@ import {
 } from "@chakra-ui/react";
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { url } from "../config/api";
+import { Link, useNavigate } from "react-router-dom";
+import { url2 } from "../config/api";
 
 const initialState = {
   name: "",
@@ -18,6 +18,7 @@ const initialState = {
 
 const Home = () => {
   const [user, setUser] = useState(initialState);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,12 +28,15 @@ const Home = () => {
   const handleSignup = (e) => {
     e.preventDefault();
     if (name !== "" && email !== "" && password !== "") {
-      fetch(url, {
+      fetch(url2, {
         method: "POST",
         body: JSON.stringify(user),
         headers: { "Content-Type": "application/json" },
       })
-        .then(() => alert("Signup successfull"))
+        .then(() => {
+          alert("Signup successfull");
+          return navigate("/");
+        })
         .catch(() => alert("Signup failed"));
     } else {
       alert("Please fill the details");

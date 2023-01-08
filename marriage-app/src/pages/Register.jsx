@@ -8,12 +8,13 @@ import {
 } from "@chakra-ui/react";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { url } from "../config/api";
 
 const initialState = {
   name: "",
   email: "",
-  password: "",
+
   religion: "",
   gender: "",
   age: "",
@@ -23,6 +24,7 @@ const Register = () => {
   const [user, setUser] = useState(initialState);
   const [userPhoto, setUserPhoto] = useState({ photo: "" });
   const [userAadhar, setUserAadhar] = useState({ aadharCard: "" });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
@@ -60,9 +62,9 @@ const Register = () => {
     reader.onload = () => {
       if (reader.readyState === 2) {
         if (name === "photo") {
-          setUserPhoto(reader.result);
+          setUserPhoto({ photo: reader.result });
         } else {
-          setUserAadhar(reader.result);
+          setUserAadhar({ aadharCard: reader.result });
         }
       }
     };
@@ -73,22 +75,35 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (name !== "" && email !== "" && age !== "" && aadharCard !== "") {
+    if (
+      name !== "" &&
+      email !== "" &&
+      age !== "" &&
+      userAadhar.aadharCard !== ""
+    ) {
       let data = { userPhoto, userAadhar, ...user };
-      //   console.log(data);
+
+      console.log(data);
       fetch(url, {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       })
-        .then(() => alert("Registration successfull"))
+        .then(() => {
+          alert("Registration successfull");
+          setUser(initialState);
+          setUserPhoto({ photo: "" });
+          setUserAadhar({ aadharCard: "" });
+          navigate("/dashboard");
+        })
         .catch(() => alert("Registration failed"));
     } else {
       alert("Please fill the details");
     }
   };
 
-  const { name, email, photo, aadharCard, age } = user;
+  const { name, email, age, gender, profession, religion, photo, aadharCard } =
+    user;
 
   return (
     <Container
@@ -121,7 +136,7 @@ const Register = () => {
         />
 
         <FormLabel>Gender</FormLabel>
-        <Select name="gender" onChange={handleInputChange}>
+        <Select name="gender" value={gender} onChange={handleInputChange}>
           <option>--Select--</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -136,7 +151,11 @@ const Register = () => {
         />
 
         <FormLabel>Profession</FormLabel>
-        <Select name="profession" onChange={handleInputChange}>
+        <Select
+          name="profession"
+          value={profession}
+          onChange={handleInputChange}
+        >
           <option>--Select--</option>
           <option value="Service">Service</option>
           <option value="Business">Business</option>
@@ -144,7 +163,7 @@ const Register = () => {
           <option value="Other">Others</option>
         </Select>
         <FormLabel>Religion</FormLabel>
-        <Select name="religion" onChange={handleInputChange}>
+        <Select name="religion" value={religion} onChange={handleInputChange}>
           <option>--Select--</option>
           <option value="Hindu">Hindu</option>
           <option value="Islam">Islam</option>
