@@ -14,7 +14,7 @@
       "age": "20",
       "profession": "Business",
       "id": 2,
-      "accept": "",
+      "accept": "Your profile accepted",
       "deny": ""
     },
     {
@@ -31,7 +31,7 @@
       "age": "21",
       "profession": "Service",
       "id": 3,
-      "accept": "Your profile accepted",
+      "accept": "",
       "deny": ""
     },
     {
@@ -48,7 +48,7 @@
       "age": "22",
       "profession": "Self Employed",
       "id": 4,
-      "accept": "",
+      "accept": "Your profile accepted",
       "deny": ""
     },
     {
@@ -64,7 +64,7 @@
       "profession": "Business",
       "id": 5,
       "accept": "",
-      "deny": "Your documents are invalid!"
+      "deny": ""
     },
     {
       "userPhoto": {

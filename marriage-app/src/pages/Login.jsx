@@ -1,15 +1,10 @@
-import {
-  Button,
-  Container,
-  FormControl,
-  FormLabel,
-  Input,
-} from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { url2 } from "../config/api";
 import { AuthContext } from "../context/AuthContextProvider";
+import { useTranslation } from "react-i18next";
 
 const initialState = {
   email: "",
@@ -17,6 +12,7 @@ const initialState = {
 };
 
 const Login = () => {
+  const { t } = useTranslation();
   const [user, setUser] = useState(initialState);
   const { toggleAuth, toggleUser } = useContext(AuthContext);
 
@@ -38,8 +34,6 @@ const Login = () => {
         fetch(url2)
           .then((res) => res.json())
           .then((res) => {
-            // console.log(res);
-            // console.log(res, " check res in 41");
             let user_name = "";
             let isAvailable = res.filter((el) => {
               user_name = el.name;
@@ -50,7 +44,7 @@ const Login = () => {
               alert("Login successful");
               sessionStorage.setItem("user", JSON.stringify(user_name));
               toggleUser();
-
+              setUser(initialState);
               return navigate("/register");
             } else {
               alert("User does not exist!");
@@ -66,7 +60,7 @@ const Login = () => {
   const { email, password } = user;
 
   return (
-    <Container
+    <Box
       width="60%"
       m="auto"
       //   border="1px solid gray"
@@ -78,7 +72,7 @@ const Login = () => {
       bg="white"
     >
       <FormControl isRequired>
-        <FormLabel>Email</FormLabel>
+        <FormLabel>{t("Email")}</FormLabel>
         <Input
           type="email"
           name="email"
@@ -86,7 +80,7 @@ const Login = () => {
           onChange={handleInputChange}
         />
 
-        <FormLabel>Password</FormLabel>
+        <FormLabel>{t("Password")}</FormLabel>
         <Input
           type="password"
           name="password"
@@ -100,14 +94,14 @@ const Login = () => {
           type="Signup"
           onClick={handleLogin}
         >
-          Login
+          {t("Login")}
         </Button>
         <br />
         <br />
 
-        <Link to="/signup">Create an account</Link>
+        <Link to="/signup">{t("Create an account")}</Link>
       </FormControl>
-    </Container>
+    </Box>
   );
 };
 

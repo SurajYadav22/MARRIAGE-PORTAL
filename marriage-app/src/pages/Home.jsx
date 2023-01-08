@@ -1,14 +1,9 @@
-import {
-  Button,
-  Container,
-  FormControl,
-  FormLabel,
-  Input,
-} from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { url2 } from "../config/api";
+import { useTranslation } from "react-i18next";
 
 const initialState = {
   name: "",
@@ -17,6 +12,7 @@ const initialState = {
 };
 
 const Home = () => {
+  const { t } = useTranslation();
   const [user, setUser] = useState(initialState);
   const navigate = useNavigate();
 
@@ -35,6 +31,7 @@ const Home = () => {
       })
         .then(() => {
           alert("Signup successfull");
+          setUser(initialState);
           return navigate("/");
         })
         .catch(() => alert("Signup failed"));
@@ -46,10 +43,9 @@ const Home = () => {
   const { name, email, password } = user;
 
   return (
-    <Container
+    <Box
       width="60%"
       m="auto"
-      //   border="1px solid gray"
       p="15px"
       mt="15px"
       borderRadius="5px"
@@ -58,14 +54,14 @@ const Home = () => {
       bg="white"
     >
       <FormControl isRequired>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>{t("Name")}</FormLabel>
         <Input
           type="text"
           name="name"
           value={name}
           onChange={handleInputChange}
         />
-        <FormLabel>Email</FormLabel>
+        <FormLabel>{t("Email")}</FormLabel>
         <Input
           type="email"
           name="email"
@@ -73,28 +69,22 @@ const Home = () => {
           onChange={handleInputChange}
         />
 
-        <FormLabel>Password</FormLabel>
+        <FormLabel>{t("Password")}</FormLabel>
         <Input
           type="password"
           name="password"
           value={password}
           onChange={handleInputChange}
         />
-        <Button
-          mt={6}
-          colorScheme="teal"
-          //   isLoading={props.isSubmitting}
-          type="Signup"
-          onClick={handleSignup}
-        >
-          Sign up
+        <Button mt={6} colorScheme="teal" type="Signup" onClick={handleSignup}>
+          {t("Signup")}
         </Button>
         <br />
         <br />
 
-        <Link to="/">Already have an account</Link>
+        <Link to="/">{t("Already have an account")}</Link>
       </FormControl>
-    </Container>
+    </Box>
   );
 };
 

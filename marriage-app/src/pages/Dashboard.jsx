@@ -10,8 +10,10 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { url } from "../config/api";
 import { AuthContext } from "../context/AuthContextProvider";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const [data, setData] = useState([]);
   const { isUser, isAdmin } = useContext(AuthContext);
 
@@ -29,7 +31,7 @@ const Dashboard = () => {
 
   const handleApprove = (elem) => {
     let updatedData = { ...elem, accept: "Your profile accepted" };
-    // setIsAccept(updatedData);
+
     console.log(updatedData, "HEY ");
     fetch(`${url}/${elem.id}`, {
       method: "PATCH",
@@ -93,7 +95,7 @@ const Dashboard = () => {
                     <Text as="b">Gender : {elem.gender}</Text>
                     {isUser ? (
                       elem.accept !== "" ? (
-                        <Text color="teal">{elem.accept}</Text>
+                        <Text color="teal">{elem.accept}✅</Text>
                       ) : (
                         ""
                       )
@@ -115,16 +117,19 @@ const Dashboard = () => {
                   {isAdmin ? (
                     <Flex justifyContent="space-around" m="5px">
                       <Button
-                        colorScheme="teal"
-                        onClick={() => handleApprove(elem)}
+                        colorScheme="green"
+                        onClick={() => {
+                          handleApprove(elem);
+                        }}
                       >
-                        Approve
+                        {t("Approve")}
                       </Button>
                       <Button
+                        disabled={elem.accept !== ""}
                         colorScheme="red"
                         onClick={() => handleReject(elem)}
                       >
-                        Deny
+                        {t("Deny")}
                       </Button>
                     </Flex>
                   ) : (

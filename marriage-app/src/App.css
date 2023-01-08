@@ -1,6 +1,8 @@
 .App {
   text-align: center;
+  background-image: linear-gradient(rgb(255, 119, 0), rgba(255, 21, 0, 0.728));
 }
+
 
 .App-logo {
   height: 40vmin;
@@ -32,6 +34,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

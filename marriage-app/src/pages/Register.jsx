@@ -5,11 +5,13 @@ import {
   FormLabel,
   Input,
   Select,
+  Text,
 } from "@chakra-ui/react";
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { url } from "../config/api";
+import { useTranslation } from "react-i18next";
 
 const initialState = {
   name: "",
@@ -23,6 +25,7 @@ const initialState = {
 };
 
 const Register = () => {
+  const { t } = useTranslation();
   const [user, setUser] = useState(initialState);
   const [userPhoto, setUserPhoto] = useState({ photo: "" });
   const [userAadhar, setUserAadhar] = useState({ aadharCard: "" });
@@ -30,28 +33,6 @@ const Register = () => {
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
-
-    // if (name == "photo" || name == "aadharCard") {
-    //   //   upload(e.target.files[0], (val) => {
-    //   //     // value = val;
-    //   //     console.log(value, "Inner");
-    //   //     setUser({ ...user, [name]: val });
-    //   //     // console.log(val);
-    //   //   });
-
-    //   const reader = new FileReader();
-
-    //   reader.onload = () => {
-    //     if (reader.readyState === 2) {
-    //       //   setPreviewImages((old) => [...old, reader.result]);
-    //       console.log(reader.result, "EEEEE");
-    //     }
-    //   };
-
-    //   reader.readAsDataURL(e.target.files[0]);
-    // }
-
-    // console.log(value, "outer");
 
     setUser({ ...user, [name]: value });
   };
@@ -119,8 +100,9 @@ const Register = () => {
       rounded="md"
       bg="white"
     >
+      <Text>{t("REGISTRATION FORM")}</Text>
       <FormControl isRequired>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>{t("Name")}</FormLabel>
         <Input
           type="text"
           name="name"
@@ -128,7 +110,7 @@ const Register = () => {
           onChange={handleInputChange}
           placeholder="Name"
         />
-        <FormLabel>Email</FormLabel>
+        <FormLabel>{t("Email")}</FormLabel>
         <Input
           type="email"
           name="email"
@@ -137,13 +119,13 @@ const Register = () => {
           placeholder="Email Id"
         />
 
-        <FormLabel>Gender</FormLabel>
+        <FormLabel>{t("Gender")}</FormLabel>
         <Select name="gender" value={gender} onChange={handleInputChange}>
-          <option>--Select--</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
+          <option>--{t("Select")}--</option>
+          <option value="Male">{t("Male")}</option>
+          <option value="Female">{t("Female")}</option>
         </Select>
-        <FormLabel>Age</FormLabel>
+        <FormLabel>{t("Age")}</FormLabel>
         <Input
           type="text"
           name="age"
@@ -152,28 +134,28 @@ const Register = () => {
           placeholder="Age"
         />
 
-        <FormLabel>Profession</FormLabel>
+        <FormLabel>{t("Profession")}</FormLabel>
         <Select
           name="profession"
           value={profession}
           onChange={handleInputChange}
         >
-          <option>--Select--</option>
-          <option value="Service">Service</option>
-          <option value="Business">Business</option>
-          <option value="Self Employed">Self Employed</option>
-          <option value="Other">Others</option>
+          <option>--{t("Select")}--</option>
+          <option value="Service">{t("Service")}</option>
+          <option value="Business">{t("Business")}</option>
+          <option value="Self Employed">{t("Self Employed")}</option>
+          <option value="Other">{t("Others")}</option>
         </Select>
-        <FormLabel>Religion</FormLabel>
+        <FormLabel>{t("Religion")}</FormLabel>
         <Select name="religion" value={religion} onChange={handleInputChange}>
-          <option>--Select--</option>
-          <option value="Hindu">Hindu</option>
-          <option value="Islam">Islam</option>
-          <option value="Sikhism">Sikhism</option>
-          <option value="Christianity">Christianity</option>
+          <option>--{t("Select")}--</option>
+          <option value="Hindu">{t("Hindu")}</option>
+          <option value="Islam">{t("Islam")}</option>
+          <option value="Sikhism">{t("Sikhism")}</option>
+          <option value="Christianity">{t("Christianity")}</option>
         </Select>
 
-        <FormLabel>Photo</FormLabel>
+        <FormLabel>{t("Photo")}</FormLabel>
         <Input
           style={{ border: "none" }}
           type="file"
@@ -181,7 +163,7 @@ const Register = () => {
           value={photo}
           onChange={handleFileChange}
         />
-        <FormLabel>Aadhar Card</FormLabel>
+        <FormLabel>{t("Aadhar Card")}</FormLabel>
         <Input
           type="file"
           style={{ border: "none" }}
@@ -189,14 +171,8 @@ const Register = () => {
           value={aadharCard}
           onChange={handleFileChange}
         />
-        <Button
-          mt={6}
-          colorScheme="teal"
-          //   isLoading={props.isSubmitting}
-          type="Signup"
-          onClick={handleSubmit}
-        >
-          Submit
+        <Button mt={6} colorScheme="teal" type="Signup" onClick={handleSubmit}>
+          {t("Submit")}
         </Button>
       </FormControl>
     </Container>
