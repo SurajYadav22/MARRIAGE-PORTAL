@@ -2,6 +2,10 @@
 
 ### It is a coding assignment given by VITE FINTECH, Where I have to make a Marraige Portal.
 
+# Deployed Link https://marriageportal.netlify.app/
+
+# Json deployed Link  https://marriage-portaldata.vercel.app/
+
 # Functionality
 
 - User can signup by name, email and password.
