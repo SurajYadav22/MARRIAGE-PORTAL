@@ -1,4 +1,5 @@
 import "./App.css";
+import "./index.css";
 import Header from "./components/Header";
 import AllRoutes from "./routes/AllRoutes";
 

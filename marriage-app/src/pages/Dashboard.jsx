@@ -69,7 +69,6 @@ const Dashboard = () => {
                 <Box
                   key={elem.id}
                   width="100%"
-                  //   h="300px"
                   borderWidth="2px"
                   borderRadius="md"
                   border="1px solid rgba(0, 0, 0, 0.30)"
@@ -90,9 +89,10 @@ const Dashboard = () => {
 
                   <VStack>
                     <Text as="b">Name : {elem.name}</Text>
-                    <Text as="b">Profession : {elem.profession}</Text>
                     <Text as="b">Age : {elem.age}</Text>
+                    <Text as="b">Profession : {elem.profession}</Text>
                     <Text as="b">Gender : {elem.gender}</Text>
+                    <Text as="b">Religion : {elem.religion}</Text>
                     {isUser ? (
                       elem.accept !== "" ? (
                         <Text color="teal">{elem.accept}✅</Text>
