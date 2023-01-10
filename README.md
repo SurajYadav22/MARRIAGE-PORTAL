@@ -19,4 +19,11 @@
 
 - React js
 - json-server
+- Chakra-ui
+- i18n-next
+- vercel
+- netlify
+
+
+Thank You!
 
