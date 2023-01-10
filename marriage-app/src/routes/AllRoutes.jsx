@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Profile from "../pages/profile";
 import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
 
@@ -27,6 +28,7 @@ const AllRoutes = () => {
           </PrivateRoute>
         }
       ></Route>
+      <Route path="/profile/:userId" element={<Profile />}></Route>
     </Routes>
   );
 };

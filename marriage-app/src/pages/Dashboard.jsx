@@ -6,21 +6,28 @@ import {
   SimpleGrid,
   Text,
   VStack,
+  Skeleton,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { url } from "../config/api";
 import { AuthContext } from "../context/AuthContextProvider";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
   const { isUser, isAdmin } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getData = () => {
+    setIsLoading(true);
     fetch(url)
       .then((res) => res.json())
-      .then((res) => setData(res))
+      .then((res) => {
+        setData(res);
+        setIsLoading(false);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -29,34 +36,22 @@ const Dashboard = () => {
     // console.log(data);
   }, []);
 
-  const handleApprove = (elem) => {
-    let updatedData = { ...elem, accept: "Your profile accepted" };
-
-    console.log(updatedData, "HEY ");
-    fetch(`${url}/${elem.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(updatedData),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then(() => {
-        alert("Profile approved!");
-      })
-      .catch(() => alert("Failed updation"));
-  };
-
-  const handleReject = (elem) => {
-    let updatedData = { ...elem, deny: "Your documents are invalid!" };
-    console.log(updatedData);
-    fetch(`${url}/${elem.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(updatedData),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then(() => {
-        alert("Profile rejected!");
-      })
-      .catch(() => alert("Failed"));
-  };
+  if (isLoading) {
+    return (
+      <Box m="px">
+        <SimpleGrid columns={[1, 2, 3, 4]} spacing="20px">
+          <Skeleton height="250px" width="250px" />
+          <Skeleton height="250px" width="250px" />
+          <Skeleton height="250px" width="250px" />
+          <Skeleton height="250px" width="250px" />
+          <Skeleton height="250px" width="250px" />
+          <Skeleton height="250px" width="250px" />
+          <Skeleton height="250px" width="250px" />
+          <Skeleton height="250px" width="250px" />
+        </SimpleGrid>
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -116,21 +111,14 @@ const Dashboard = () => {
 
                   {isAdmin ? (
                     <Flex justifyContent="space-around" m="5px">
-                      <Button
-                        colorScheme="green"
-                        onClick={() => {
-                          handleApprove(elem);
-                        }}
-                      >
-                        {t("Approve")}
-                      </Button>
-                      <Button
-                        disabled={elem.accept !== ""}
-                        colorScheme="red"
-                        onClick={() => handleReject(elem)}
-                      >
-                        {t("Deny")}
-                      </Button>
+                      <Link to={`/profile/${elem.id}`}>
+                        <Button colorScheme="green">{t("Approve")}</Button>
+                      </Link>
+                      <Link to={`/profile/${elem.id}`}>
+                        <Button disabled={elem.accept !== ""} colorScheme="red">
+                          {t("Deny")}
+                        </Button>
+                      </Link>
                     </Flex>
                   ) : (
                     ""
